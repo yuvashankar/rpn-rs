@@ -1,4 +1,4 @@
-# Reverse RPN Calculator
+# Reverse Polish Notation Calculator
 
 A simple [Reverse Polish Notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation) calculator built in Rust. 
 

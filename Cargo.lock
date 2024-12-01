@@ -128,7 +128,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "reverse-rpn-rs"
+name = "rpn-rs"
 version = "0.1.0"
 dependencies = [
  "clap",

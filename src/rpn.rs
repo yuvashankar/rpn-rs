@@ -19,7 +19,7 @@ impl TryFrom<&str> for Operation {
     }
 }
 
-pub fn reverse_rpn(input: &str) -> Result<Option<f32>> {
+pub fn rpn_calculator(input: &str) -> Result<Option<f32>> {
     let output = input
         .split_whitespace()
         .try_fold(Vec::new(), |mut stack, x| {
@@ -55,13 +55,13 @@ fn try_mathematical_operation(
 
 #[cfg(test)]
 mod tests {
-    use super::reverse_rpn;
+    use super::rpn_calculator;
     use crate::error::Result;
 
     #[test]
     fn simple_add() -> Result<()> {
         let input = "10 4 +";
-        let out = reverse_rpn(input)?;
+        let out = rpn_calculator(input)?;
         let number = out.unwrap();
 
         assert_eq!(number, 14.0);
@@ -72,7 +72,7 @@ mod tests {
     fn test_simple_multiply() -> Result<()> {
         let input = "10 4 *";
 
-        let out = reverse_rpn(input)?;
+        let out = rpn_calculator(input)?;
         let result = out.unwrap();
 
         assert_eq!(result, 40.0);
@@ -83,7 +83,7 @@ mod tests {
     fn simpe_subtract() -> Result<()> {
         let input = "10 4 -";
 
-        let out = reverse_rpn(input)?;
+        let out = rpn_calculator(input)?;
 
         let result = out.unwrap();
         assert_eq!(result, 6.0);
@@ -93,7 +93,7 @@ mod tests {
     #[test]
     fn base_divide() -> Result<()> {
         let input = "14 2 /";
-        let out = reverse_rpn(input)?;
+        let out = rpn_calculator(input)?;
 
         let result = out.unwrap();
         assert_eq!(result, 7.0);
@@ -103,7 +103,7 @@ mod tests {
     #[test]
     fn invalid_input() {
         let input = "10 +";
-        let out = reverse_rpn(input);
+        let out = rpn_calculator(input);
         assert!(out.is_err());
     }
 
@@ -111,7 +111,7 @@ mod tests {
     fn test_empty_string() {
         let input = "";
 
-        let out = reverse_rpn(input).unwrap();
+        let out = rpn_calculator(input).unwrap();
         assert!(out.is_none());
     }
 }

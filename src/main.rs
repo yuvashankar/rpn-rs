@@ -1,5 +1,5 @@
 use clap::Parser;
-use reverse_rpn_rs::{reverse_rpn, Error, Result};
+use rpn_rs::{rpn_calculator, Error, Result};
 
 #[derive(Parser, Debug)]
 #[command(version, about)]
@@ -18,7 +18,7 @@ struct Opts {
 fn main() -> Result<()> {
     let input = Opts::parse();
 
-    let rpn_output = reverse_rpn(&input.input)?;
+    let rpn_output = rpn_calculator(&input.input)?;
 
     let result = rpn_output.ok_or(Error::NoResult)?;
 
