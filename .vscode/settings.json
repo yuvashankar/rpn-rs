@@ -1,4 +1,5 @@
 {
     "editor.formatOnSave": true,
-    "rust-analyzer.imports.prefix": "self"
+    "rust-analyzer.imports.prefix": "self",
+    "debug.allowBreakpointsEverywhere": true,
 }

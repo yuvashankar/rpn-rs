@@ -65,18 +65,17 @@ Which puts the compiled binary in the `result` directory.
 This was an example problem from the [Learn you a Haskell for Great Good](https://www.learnyouahaskell.com/functionally-solving-problems).
 In the book the author walks through the solution in Haskell. 
 
-I wanted to see if I could apply the same principals with Rust. Since functional programming is essentially computation without state mutation, you'll notice that there are no mutable variables within the code block. I had to cheat a little bit and create a mutable vector within a closure, it's bounded I guess.
+I wanted to see if I could apply the same principals with Rust. Since functional programming is essentially computation without state mutation, you'll notice that there are no mutable variables within the code block. I had to cheat a little bit and create a mutable vector within a closure, it's bounded I guess. I think there is a better way i.e. using `reduce`. This is an exercise left to the reader.
 
 I also wanted to use this as an oppurtuinity to learn how to build a nix flake for rust. 
 
+## Footnotes
 ## Initializing a nix repo for Rust
-
 The documentation on nix and nix flakes is somewhat fractured, and depending on when you are reading this, the information may be out of date or not the prescribed method of doing it. These are the steps that I had to take to be able to develop rust with a nix flake.
 
 Using VSCode/Vscodium's [rust-analyzer](https://rust-analyzer.github.io/) extension is not possible by just `cd`-ing into the directory. These are the steps that I took to be able to develop with rust-analyzer.
 
-
-### Initialize the nix rust flake template
+    
 ```bash
 nix flake init --template templates#rust
 ```
@@ -86,3 +85,7 @@ The nix flake init templates create a `.envrc` file that contains the modificati
 
 ### 2. Configure vscode in home-manager with the `direnv` extension
 See [this](https://github.com/yuvashankar/nix-config/blob/9e19c7954b616ce83e37663efc2e445054ecd728/home/features/productivity/common/vscodium.nix#L1) commit for the config that worked.
+
+## Open questions
+* Adding extensions with VSCodium from within the flake adds it globally, not ideal.
+* Have been unable to setup a debugger from within the nix flake. [May not be possible right now?](https://a.ndr.ooo/Nix--and--Rust--and--VSCode#addendum-debugging)
