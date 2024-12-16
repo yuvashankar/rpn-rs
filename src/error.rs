@@ -12,4 +12,7 @@ pub enum Error {
 
     #[error("Could not compute the result, perhaps no input was given?")]
     NoResult,
+
+    #[error("Io Error")]
+    IoError(#[from] std::io::Error),
 }

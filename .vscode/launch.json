@@ -1,0 +1,23 @@
+//https://www.forrestthewoods.com/blog/how-to-debug-rust-with-visual-studio-code/
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug executable (Windows)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/target/debug/rpn-rs",
+            "cwd": "${workspaceRoot}"
+        },
+        {
+            "name": "Debug executable, Linux/OSX",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/target/debug/rpn-rs",
+            "args": [
+                "10 4 +"
+            ],
+            "cwd": "${workspaceRoot}"
+        },
+    ]
+}

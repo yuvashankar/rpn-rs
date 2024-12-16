@@ -2,8 +2,8 @@ use super::error::{Error, Result};
 enum Operation {
     Add,
     Multiply,
-    // ??
-    // ??
+    Subtract,
+    Divide,
 }
 
 impl TryFrom<&str> for Operation {
@@ -13,8 +13,8 @@ impl TryFrom<&str> for Operation {
         match value {
             "+" => Ok(Self::Add),
             "*" => Ok(Self::Multiply),
-            // "-" => ??
-            // "/" => ??
+            "-" => Ok(Self::Subtract),
+            "/" => Ok(Self::Divide),
             _ => Err(Error::UnsupportedOperation(value.into())),
         }
     }
@@ -46,9 +46,9 @@ fn try_mathematical_operation(
 ) -> Result<f32> {
     let result = match (rhs, lhs, operation) {
         (Some(a), Some(b), Operation::Add) => Ok(a + b),
-        // (??, ?? ??) = a / b,
+        (Some(a), Some(b), Operation::Subtract) => Ok(a - b),
         (Some(a), Some(b), Operation::Multiply) => Ok(a * b),
-        // (??, ??, ??) = a - b,
+        (Some(a), Some(b), Operation::Divide) => Ok(a / b),
         _ => Err(Error::MalforedInput),
     };
     result
@@ -56,8 +56,10 @@ fn try_mathematical_operation(
 
 #[cfg(test)]
 mod tests {
+
     use super::rpn_calculator;
     use crate::error::Result;
+    use std::{fs, io::Read};
 
     #[test]
     fn simple_add() -> Result<()> {
@@ -114,5 +116,52 @@ mod tests {
 
         let out = rpn_calculator(input).unwrap();
         assert!(out.is_none());
+    }
+
+    #[test]
+    fn test_ode5_1() {
+        let input = "9 9 - 9 + 9 * 9 /";
+        let out = rpn_calculator(input).unwrap();
+
+        let result = out.unwrap();
+
+        assert_eq!(result, 9.);
+    }
+
+    #[test]
+    fn test_ode5_2() {
+        let input = "3 4 + 5 6 + *";
+        let out = rpn_calculator(input).unwrap();
+
+        let result = out.unwrap();
+
+        assert_eq!(result, 77.);
+    }
+
+    #[test]
+    fn test_ode5_3() {
+        let input = "2 3 + 5 3 - 4 2 / * -";
+        let out = rpn_calculator(input).unwrap();
+
+        let result = out.unwrap();
+
+        assert_eq!(result, 1.);
+    }
+
+    #[test]
+    fn test_ode5_large_file() -> Result<()> {
+        let file_path = std::path::Path::new("./test/rpn_expression-5869168714501555882.txt");
+
+        let input = fs::read_to_string(file_path)?;
+
+        let out = rpn_calculator(&input).unwrap();
+
+        let result = out.unwrap();
+
+        dbg!(result);
+
+        assert!(false);
+
+        Ok(())
     }
 }
