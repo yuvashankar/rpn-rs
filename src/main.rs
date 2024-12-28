@@ -18,7 +18,7 @@ struct Opts {
 fn main() -> Result<()> {
     let input = Opts::parse();
 
-    let rpn_output = rpn_calculator(&input.input)?;
+    let rpn_output = rpn_calculator::<f64>(&input.input)?;
 
     let result = rpn_output.ok_or(Error::NoResult)?;
 
